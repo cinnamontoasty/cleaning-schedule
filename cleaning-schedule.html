@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="House Clean">
+<meta name="theme-color" content="#1a2e1a">
+<title>30-Day Clean</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f1f0f;
+    --surface: #182818;
+    --surface2: #1f361f;
+    --accent: #7ec87e;
+    --accent2: #b8e6b8;
+    --gold: #d4a843;
+    --text: #e8f0e8;
+    --text-muted: #7a9a7a;
+    --done-bg: #0d1f0d;
+    --done-text: #4a7a4a;
+    --radius: 14px;
+    --weekend: #2a1f0a;
+    --weekend-accent: #d4a843;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    padding-bottom: 80px;
+  }
+
+  header {
+    background: linear-gradient(160deg, #1a3a1a 0%, #0f1f0f 100%);
+    padding: 28px 20px 20px;
+    border-bottom: 1px solid #2a4a2a;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    line-height: 1.2;
+    color: var(--accent2);
+  }
+
+  h1 em {
+    display: block;
+    font-size: 0.9rem;
+    font-style: italic;
+    color: var(--gold);
+    font-weight: 400;
+  }
+
+  .progress-pill {
+    background: var(--surface2);
+    border: 1px solid #3a5a3a;
+    border-radius: 30px;
+    padding: 6px 14px;
+    font-size: 0.75rem;
+    color: var(--accent);
+    white-space: nowrap;
+    text-align: center;
+    min-width: 80px;
+  }
+
+  .progress-pill strong {
+    display: block;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--accent2);
+  }
+
+  .progress-bar-wrap {
+    margin-top: 14px;
+    background: #1a2e1a;
+    border-radius: 4px;
+    height: 6px;
+    overflow: hidden;
+  }
+
+  .progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--gold));
+    border-radius: 4px;
+    transition: width 0.5s ease;
+  }
+
+  .week-label {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: var(--gold);
+    padding: 24px 20px 10px;
+    letter-spacing: 0.03em;
+  }
+
+  .week-label span {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 400;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .day-card {
+    margin: 0 14px 12px;
+    background: var(--surface);
+    border-radius: var(--radius);
+    border: 1px solid #253525;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+
+  .day-card.weekend {
+    background: var(--weekend);
+    border-color: #3d2e10;
+  }
+
+  .day-card.today {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 1px var(--accent)33;
+  }
+
+  .day-card.all-done {
+    opacity: 0.6;
+    border-color: #1e2e1e;
+  }
+
+  .day-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 16px 10px;
+    cursor: pointer;
+    gap: 10px;
+    user-select: none;
+  }
+
+  .day-date {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .day-name {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  .day-card.weekend .day-name {
+    color: var(--gold);
+    opacity: 0.8;
+  }
+
+  .day-card.today .day-name::after {
+    content: ' · TODAY';
+    color: var(--accent);
+  }
+
+  .day-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: var(--text);
+    margin-top: 2px;
+    line-height: 1.3;
+  }
+
+  .day-card.weekend .day-title {
+    color: var(--accent2);
+  }
+
+  .day-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+    flex-shrink: 0;
+  }
+
+  .time-badge {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    background: #1a2e1a;
+    padding: 3px 8px;
+    border-radius: 20px;
+    border: 1px solid #2a3e2a;
+  }
+
+  .day-card.weekend .time-badge {
+    background: #2a1f0a;
+    border-color: #3d2e10;
+    color: var(--gold);
+  }
+
+  .done-count {
+    font-size: 0.65rem;
+    color: var(--accent);
+  }
+
+  .chevron {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    transition: transform 0.2s;
+    margin-left: 2px;
+  }
+
+  .day-card.open .chevron { transform: rotate(180deg); }
+
+  .task-list {
+    display: none;
+    padding: 4px 14px 14px;
+    border-top: 1px solid #1e2e1e;
+  }
+
+  .day-card.weekend .task-list {
+    border-top-color: #2a1f0a;
+  }
+
+  .day-card.open .task-list { display: block; }
+
+  .task-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 11px 0;
+    border-bottom: 1px solid #1a2a1a;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+
+  .day-card.weekend .task-item {
+    border-bottom-color: #241a08;
+  }
+
+  .task-item:last-child { border-bottom: none; }
+
+  .task-item.done { opacity: 0.45; }
+
+  .task-check {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 2px solid #3a5a3a;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1px;
+    transition: all 0.2s;
+    background: transparent;
+  }
+
+  .day-card.weekend .task-check { border-color: #5a4020; }
+
+  .task-item.done .task-check {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .task-item.done .task-check::after {
+    content: '✓';
+    font-size: 11px;
+    color: #0f1f0f;
+    font-weight: 700;
+  }
+
+  .task-text {
+    font-size: 0.9rem;
+    line-height: 1.45;
+    color: var(--text);
+    padding-top: 2px;
+  }
+
+  .task-item.done .task-text {
+    text-decoration: line-through;
+    color: var(--done-text);
+  }
+
+  .task-note {
+    display: block;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    margin-top: 2px;
+    font-style: italic;
+  }
+
+  .emoji-icon {
+    font-size: 0.9rem;
+  }
+
+  .bonus-tag {
+    display: inline-block;
+    font-size: 0.6rem;
+    background: #2a1f0a;
+    color: var(--gold);
+    border: 1px solid #3d2e10;
+    border-radius: 10px;
+    padding: 1px 6px;
+    margin-left: 6px;
+    vertical-align: middle;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 12px 20px;
+    background: var(--bg);
+    border-top: 1px solid #1e2e1e;
+    text-align: center;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+  }
+
+  footer a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .install-banner {
+    margin: 12px 14px 0;
+    background: #1a2e0a;
+    border: 1px solid #3a5a1a;
+    border-radius: var(--radius);
+    padding: 12px 16px;
+    font-size: 0.78rem;
+    color: var(--accent2);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .install-banner .icon { font-size: 1.2rem; flex-shrink: 0; }
+
+  @media (prefers-color-scheme: light) {
+    /* keep dark — it's intentional */
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <h1>House Clean <em>for his homecoming</em></h1>
+    <div class="progress-pill">
+      <strong id="pct">0%</strong>
+      done
+    </div>
+  </div>
+  <div class="progress-bar-wrap">
+    <div class="progress-bar" id="progressBar" style="width:0%"></div>
+  </div>
+</header>
+
+<div class="install-banner">
+  <span class="icon">📲</span>
+  <span>To save to home screen: tap <strong>Share → Add to Home Screen</strong> (iOS) or <strong>Menu → Install App</strong> (Android)</span>
+</div>
+
+<div id="schedule"></div>
+
+<footer>
+  Tap any task to check it off &nbsp;·&nbsp; Progress saves automatically
+</footer>
+
+<script>
+const DAYS = [
+  // WEEK 1
+  {
+    date: "Apr 17", label: "Friday", week: "Week 1 — Kitchens & Bathrooms First", time: "1.5–2 hrs", weekend: false, today: true,
+    focus: "Kitchen: surfaces & sink",
+    tasks: [
+      { text: "Clear and wipe all countertops" },
+      { text: "Clean and shine the sink" },
+      { text: "Wipe down cabinet fronts (top ones)" },
+      { text: "Quick sweep/mop of kitchen floor" },
+    ]
+  },
+  {
+    date: "Apr 19", label: "Saturday", time: "5 hrs", weekend: true,
+    focus: "Kitchen: deep clean day",
+    tasks: [
+      { text: "Deep clean stovetop (grates, burners, drip pans)" },
+      { text: "Clean oven exterior & control panel" },
+      { text: "Clean microwave inside and out" },
+      { text: "Wipe down all small appliances" },
+      { text: "Clean backsplash" },
+      { text: "Scrub sink & faucet hardware" },
+      { text: "Wipe window above sink" },
+    ]
+  },
+  {
+    date: "Apr 20", label: "Sunday", time: "5 hrs", weekend: true,
+    focus: "Kitchen: fridge, cabinets & floors",
+    tasks: [
+      { text: "Empty and clean fridge inside (shelves, drawers)" },
+      { text: "Wipe fridge exterior top to bottom" },
+      { text: "Clean all cabinet exteriors" },
+      { text: "Wipe pantry/cabinet interiors if accessible" },
+      { text: "Thorough sweep, mop, baseboards" },
+      { text: "Clean trash can area" },
+      { text: "Tidy and organize one drawer or shelf" },
+    ]
+  },
+
+  // WEEK 2
+  {
+    date: "Apr 21", label: "Monday", week: "Week 2 — Entry, Living Spaces & ½ Bath", time: "1.5–2 hrs", weekend: false,
+    focus: "Entryway & corridor",
+    tasks: [
+      { text: "Declutter shoes, bags, and clutter" },
+      { text: "Dust surfaces, light fixtures, coat hooks" },
+      { text: "Sweep, vacuum, or mop floor" },
+      { text: "Wipe front door inside & glass panels" },
+    ]
+  },
+  {
+    date: "Apr 22", label: "Tuesday", time: "1.5–2 hrs", weekend: false,
+    focus: "½ bath & breezeway/hall",
+    tasks: [
+      { text: "Full clean: toilet, sink, mirror, floor" },
+      { text: "Wipe walls and light switch" },
+      { text: "Replace hand towels" },
+      { text: "Dust & sweep breezeway/hall" },
+    ]
+  },
+  {
+    date: "Apr 24", label: "Thursday", time: "1.5–2 hrs", weekend: false,
+    focus: "Living room: dust all surfaces",
+    tasks: [
+      { text: "Dust furniture, shelves, décor" },
+      { text: "Dust TV, electronics, cords" },
+      { text: "Wipe down lamps and shades" },
+      { text: "Clean/dust window sills" },
+    ]
+  },
+  {
+    date: "Apr 25", label: "Friday", time: "1.5–2 hrs", weekend: false,
+    focus: "Living room: floors & baseboards",
+    tasks: [
+      { text: "Vacuum rugs and upholstered furniture" },
+      { text: "Vacuum or mop hard floors" },
+      { text: "Wipe baseboards throughout living room" },
+      { text: "Fluff and arrange pillows/throws" },
+    ]
+  },
+  {
+    date: "Apr 26", label: "Saturday", time: "5 hrs", weekend: true,
+    focus: "Living room: LADDER DAY + Dining room",
+    tasks: [
+      { text: "⚠️ Set up ladder safely before starting", note: "Safety first!" },
+      { text: "Sweep cobwebs from vaulted ceiling" },
+      { text: "Clean upper wall surfaces" },
+      { text: "Clean high/vaulted windows inside" },
+      { text: "Dust and wipe any high shelves or ledges" },
+      { text: "Full dining area clean: table, chairs, buffet" },
+      { text: "Dust dining light fixture" },
+      { text: "Sweep/mop dining floor & baseboards" },
+    ]
+  },
+  {
+    date: "Apr 27", label: "Sunday", time: "5 hrs", weekend: true,
+    focus: "Downstairs office & hall bathroom (deep clean)",
+    tasks: [
+      { text: "Office: declutter desk and surfaces" },
+      { text: "Office: dust shelves, monitor, equipment" },
+      { text: "Office: vacuum floor, wipe baseboards" },
+      { text: "Hall bathroom: scrub tub/shower walls & floor" },
+      { text: "Hall bathroom: clean toilet inside and out" },
+      { text: "Hall bathroom: scrub sink & polish faucet" },
+      { text: "Hall bathroom: clean mirror & light fixture" },
+      { text: "Hall bathroom: mop floor, replace towels" },
+    ]
+  },
+
+  // WEEK 3
+  {
+    date: "Apr 28", label: "Monday", week: "Week 3 — Upstairs, Master & Windows Begin", time: "1.5–2 hrs", weekend: false,
+    focus: "Stairway",
+    tasks: [
+      { text: "Dust and wipe stair railings top to bottom" },
+      { text: "Wipe stair wall scuff marks" },
+      { text: "Vacuum or mop each step" },
+      { text: "Clean stairway light fixture" },
+    ]
+  },
+  {
+    date: "Apr 29", label: "Tuesday", time: "1.5–2 hrs", weekend: false,
+    focus: "Master bedroom: declutter & dust",
+    tasks: [
+      { text: "Clear nightstands and surfaces" },
+      { text: "Dust furniture, mirror, décor" },
+      { text: "Wipe down headboard" },
+      { text: "Launder bedding if not recently done" },
+    ]
+  },
+  {
+    date: "May 1", label: "Thursday", time: "1.5–2 hrs", weekend: false,
+    focus: "Master bedroom: ladder + floors",
+    tasks: [
+      { text: "⚠️ Set up ladder — clean ceiling fan blades", note: "Wipe each blade carefully" },
+      { text: "Vacuum mattress (flip if needed)" },
+      { text: "Vacuum floor, under bed" },
+      { text: "Wipe baseboards" },
+    ]
+  },
+  {
+    date: "May 2", label: "Friday", time: "1.5–2 hrs", weekend: false,
+    focus: "Balcony",
+    tasks: [
+      { text: "Sweep balcony floor thoroughly" },
+      { text: "Wipe down furniture, table, chairs" },
+      { text: "Clean railings inside and out" },
+      { text: "Wipe balcony door tracks & glass" },
+    ]
+  },
+  {
+    date: "May 3", label: "Saturday", time: "5 hrs", weekend: true,
+    focus: "Windows: inside downstairs + blinds",
+    tasks: [
+      { text: "Dust all downstairs blinds (close, wipe, flip, wipe)" },
+      { text: "Clean downstairs windows inside — living room" },
+      { text: "Clean downstairs windows inside — kitchen" },
+      { text: "Clean downstairs windows inside — dining room" },
+      { text: "Clean downstairs windows inside — office/entry" },
+      { text: "Wipe all window sills and frames" },
+    ]
+  },
+  {
+    date: "May 4", label: "Sunday", time: "5 hrs", weekend: true,
+    focus: "Windows: inside upstairs + blinds",
+    tasks: [
+      { text: "Dust all upstairs blinds" },
+      { text: "Clean upstairs windows inside — master bedroom" },
+      { text: "Clean upstairs windows inside — upstairs office" },
+      { text: "Clean upstairs windows inside — workout room" },
+      { text: "Clean upstairs windows inside — bathrooms" },
+      { text: "Wipe all upstairs window sills and frames" },
+    ]
+  },
+
+  // WEEK 4
+  {
+    date: "May 5", label: "Monday", week: "Week 4 — Upstairs Rooms, Outside Windows & Finish", time: "1.5–2 hrs", weekend: false,
+    focus: "Upstairs office",
+    tasks: [
+      { text: "Declutter desk, shelves, surfaces" },
+      { text: "Dust monitors, equipment, books" },
+      { text: "Vacuum floor and chair mat" },
+      { text: "Wipe baseboards" },
+    ]
+  },
+  {
+    date: "May 6", label: "Tuesday", time: "1.5–2 hrs", weekend: false,
+    focus: "Workout room",
+    tasks: [
+      { text: "Wipe down all equipment surfaces" },
+      { text: "Clean mirrors if any" },
+      { text: "Sweep/mop floor" },
+      { text: "Air out room, wipe baseboards" },
+    ]
+  },
+  {
+    date: "May 8", label: "Thursday", time: "1.5–2 hrs", weekend: false,
+    focus: "Outside windows — downstairs",
+    tasks: [
+      { text: "⚠️ Work safely — step stool only where safe", note: "Don't overreach" },
+      { text: "Clean outside: living room windows" },
+      { text: "Clean outside: kitchen & dining windows" },
+      { text: "Clean outside: entry & office windows" },
+    ]
+  },
+  {
+    date: "May 9", label: "Friday", time: "1.5–2 hrs", weekend: false,
+    focus: "Outside windows — upstairs",
+    tasks: [
+      { text: "⚠️ Ladder outside — stable ground, someone nearby ideally", note: "Take your time" },
+      { text: "Clean outside: master bedroom windows" },
+      { text: "Clean outside: upstairs office & workout windows" },
+      { text: "Clean outside: balcony door exterior" },
+    ]
+  },
+  {
+    date: "May 10", label: "Saturday", time: "5 hrs", weekend: true,
+    focus: "Master bath deep clean + full house touch-up",
+    tasks: [
+      { text: "Master bath: scrub shower walls, floor, glass" },
+      { text: "Master bath: deep clean tub" },
+      { text: "Master bath: toilet, sink, faucet" },
+      { text: "Master bath: mirror, light fixture, floor" },
+      { text: "Re-vacuum all main living areas" },
+      { text: "Quick mop of kitchen, bathrooms, entryway" },
+      { text: "Replace all hand towels and bath mats" },
+    ]
+  },
+  {
+    date: "May 11", label: "Sunday", time: "5 hrs", weekend: true,
+    focus: "⭐ BONUS: Garage, porch & garden",
+    tasks: [
+      { text: "Sweep garage floor", note: "Bonus — if energy allows!" },
+      { text: "Tidy garage items/tools", note: "Just a quick pass" },
+      { text: "Sweep and clean front porch" },
+      { text: "Wipe front door exterior" },
+      { text: "Gardening: pull weeds, tidy beds", note: "As much as time allows" },
+      { text: "🎉 Final walkthrough — enjoy your clean home!", note: "You did it!" },
+    ]
+  },
+];
+
+const STORAGE_KEY = 'cleaning_schedule_v1';
+
+function loadState() {
+  try {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+  } catch { return {}; }
+}
+
+function saveState(state) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+let state = loadState();
+
+function totalTasks() {
+  return DAYS.reduce((s, d) => s + d.tasks.length, 0);
+}
+
+function doneTasks() {
+  return Object.values(state).filter(Boolean).length;
+}
+
+function updateProgress() {
+  const pct = Math.round((doneTasks() / totalTasks()) * 100);
+  document.getElementById('pct').textContent = pct + '%';
+  document.getElementById('progressBar').style.width = pct + '%';
+}
+
+function renderSchedule() {
+  const container = document.getElementById('schedule');
+  let html = '';
+  let lastWeek = '';
+
+  DAYS.forEach((day, di) => {
+    if (day.week && day.week !== lastWeek) {
+      lastWeek = day.week;
+      html += `<div class="week-label"><span>📅 Schedule</span>${day.week}</div>`;
+    }
+
+    const allDone = day.tasks.every((_, ti) => state[`${di}-${ti}`]);
+    const doneCount = day.tasks.filter((_, ti) => state[`${di}-${ti}`]).length;
+    const isOpen = day.today || false;
+
+    html += `<div class="day-card ${day.weekend ? 'weekend' : ''} ${day.today ? 'today' : ''} ${allDone ? 'all-done' : ''} ${isOpen ? 'open' : ''}" id="day-${di}">`;
+    html += `<div class="day-header" onclick="toggleDay(${di})">`;
+    html += `<div class="day-date">`;
+    html += `<span class="day-name">${day.label}, ${day.date}</span>`;
+    html += `<span class="day-title">${day.focus}</span>`;
+    html += `</div>`;
+    html += `<div class="day-meta">`;
+    html += `<span class="time-badge">⏱ ${day.time}</span>`;
+    html += `<span class="done-count">${doneCount}/${day.tasks.length} done</span>`;
+    html += `</div>`;
+    html += `<span class="chevron">▼</span>`;
+    html += `</div>`;
+
+    html += `<div class="task-list">`;
+    day.tasks.forEach((task, ti) => {
+      const key = `${di}-${ti}`;
+      const done = state[key];
+      html += `<div class="task-item ${done ? 'done' : ''}" onclick="toggleTask('${key}', ${di})">`;
+      html += `<div class="task-check"></div>`;
+      html += `<div class="task-text">${task.text}`;
+      if (task.note) html += `<span class="task-note">${task.note}</span>`;
+      html += `</div>`;
+      html += `</div>`;
+    });
+    html += `</div>`;
+    html += `</div>`;
+  });
+
+  container.innerHTML = html;
+  updateProgress();
+}
+
+function toggleDay(di) {
+  const card = document.getElementById(`day-${di}`);
+  card.classList.toggle('open');
+}
+
+function toggleTask(key, di) {
+  state[key] = !state[key];
+  saveState(state);
+
+  // Update task UI
+  const card = document.getElementById(`day-${di}`);
+  const tasks = card.querySelectorAll('.task-item');
+  const day = DAYS[di];
+
+  tasks.forEach((el, ti) => {
+    const k = `${di}-${ti}`;
+    el.classList.toggle('done', !!state[k]);
+  });
+
+  // Update done count
+  const doneCount = day.tasks.filter((_, ti) => state[`${di}-${ti}`]).length;
+  card.querySelector('.done-count').textContent = `${doneCount}/${day.tasks.length} done`;
+
+  const allDone = doneCount === day.tasks.length;
+  card.classList.toggle('all-done', allDone);
+
+  updateProgress();
+}
+
+renderSchedule();
+</script>
+</body>
+</html>
