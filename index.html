@@ -341,20 +341,59 @@
     text-decoration: none;
   }
 
-  .install-banner {
+  .data-bar {
     margin: 12px 14px 0;
-    background: #1a2e0a;
-    border: 1px solid #3a5a1a;
-    border-radius: var(--radius);
-    padding: 12px 16px;
-    font-size: 0.78rem;
-    color: var(--accent2);
     display: flex;
-    align-items: center;
-    gap: 10px;
+    gap: 8px;
   }
 
-  .install-banner .icon { font-size: 1.2rem; flex-shrink: 0; }
+  .data-btn {
+    flex: 1;
+    background: var(--surface2);
+    border: 1px solid #3a5a3a;
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.78rem;
+    color: var(--accent2);
+    cursor: pointer;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: background 0.15s, border-color 0.15s;
+  }
+
+  .data-btn:active {
+    background: #2a4a2a;
+    border-color: var(--accent);
+  }
+
+  .data-btn .btn-icon { font-size: 1rem; }
+
+  .toast {
+    position: fixed;
+    bottom: 60px;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background: var(--accent);
+    color: #0f1f0f;
+    font-size: 0.78rem;
+    font-weight: 500;
+    padding: 8px 18px;
+    border-radius: 20px;
+    opacity: 0;
+    transition: opacity 0.3s, transform 0.3s;
+    pointer-events: none;
+    white-space: nowrap;
+    z-index: 200;
+  }
+
+  .toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
 
   @media (prefers-color-scheme: light) {
     /* keep dark — it's intentional */
@@ -376,15 +415,20 @@
   </div>
 </header>
 
-<div class="install-banner">
-  <span class="icon">📲</span>
-  <span>To save to home screen: tap <strong>Share → Add to Home Screen</strong> (iOS) or <strong>Menu → Install App</strong> (Android)</span>
+<div class="data-bar">
+  <button class="data-btn" onclick="exportProgress()">
+    <span class="btn-icon">📤</span> Export progress
+  </button>
+  <button class="data-btn" onclick="importProgress()">
+    <span class="btn-icon">📥</span> Import progress
+  </button>
 </div>
+<div class="toast" id="toast"></div>
 
 <div id="schedule"></div>
 
 <footer>
-  Tap any task to check it off &nbsp;·&nbsp; Progress saves automatically
+  Tap any task to check it off &nbsp;·&nbsp; Export before clearing browser history
 </footer>
 
 <script>
@@ -733,6 +777,52 @@ function toggleTask(key, di) {
   card.classList.toggle('all-done', allDone);
 
   updateProgress();
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+function exportProgress() {
+  const data = JSON.stringify(state);
+  const encoded = btoa(data);
+  // Build a tiny text file with the backup code
+  const blob = new Blob([encoded], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'cleaning-progress-backup.txt';
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('✓ Progress exported!');
+}
+
+function importProgress() {
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = '.txt,text/plain';
+  input.onchange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      try {
+        const decoded = atob(ev.target.result.trim());
+        const imported = JSON.parse(decoded);
+        state = imported;
+        saveState(state);
+        renderSchedule();
+        showToast('✓ Progress restored!');
+      } catch {
+        showToast('⚠️ Could not read that file');
+      }
+    };
+    reader.readAsText(file);
+  };
+  input.click();
 }
 
 renderSchedule();
