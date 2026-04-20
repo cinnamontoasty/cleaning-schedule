@@ -433,57 +433,59 @@
 
 <script>
 const DAYS = [
-  // WEEK 1
+  // WEEK 1 — historical record
   {
-    date: "Apr 17", label: "Friday", week: "Week 1 — Kitchens & Bathrooms First", time: "1.5–2 hrs", weekend: false, today: true,
-    focus: "Kitchen: surfaces & sink",
+    date: "Apr 17", label: "Friday", week: "Week 1 — Kitchen (Completed Days)", time: "1.5–2 hrs", weekend: false, today: true,
+    focus: "Kitchen: surfaces & sink ✓ Done",
     tasks: [
       { text: "Clear and wipe all countertops" },
       { text: "Clean and shine the sink" },
-      { text: "Wipe down cabinet fronts (top ones)" },
+      { text: "Wipe down upper cabinet fronts" },
       { text: "Quick sweep/mop of kitchen floor" },
     ]
   },
   {
     date: "Apr 18", label: "Saturday", time: "5 hrs", weekend: true,
-    focus: "Kitchen: deep clean day",
+    focus: "Kitchen: appliances & hardware ✓",
     tasks: [
       { text: "Deep clean stovetop (grates, burners, drip pans)" },
-      { text: "Clean oven exterior & control panel" },
       { text: "Clean microwave inside and out" },
-      { text: "Wipe down all small appliances" },
-      { text: "Clean backsplash" },
       { text: "Scrub sink & faucet hardware" },
-      { text: "Wipe window above sink" },
     ]
   },
   {
     date: "Apr 19", label: "Sunday", time: "5 hrs", weekend: true,
-    focus: "Kitchen: fridge, cabinets & floors",
+    focus: "Kitchen: fridge top ✓",
     tasks: [
-      { text: "Empty and clean fridge inside (shelves, drawers)" },
-      { text: "Wipe fridge exterior top to bottom" },
-      { text: "Clean all cabinet exteriors" },
-      { text: "Wipe pantry/cabinet interiors if accessible" },
-      { text: "Thorough sweep, mop, baseboards" },
-      { text: "Clean trash can area" },
-      { text: "Tidy and organize one drawer or shelf" },
+      { text: "Clean top of fridge" },
     ]
   },
 
   // WEEK 2
   {
-    date: "Apr 20", label: "Monday", week: "Week 2 — Entry, Living Spaces & ½ Bath", time: "1.5–2 hrs", weekend: false,
-    focus: "Entryway & corridor",
+    date: "Apr 20", label: "Monday", week: "Week 2 — Finish Kitchen + Entry & Living Spaces", time: "1.5–2 hrs", weekend: false,
+    focus: "Kitchen wrap-up + entryway",
     tasks: [
+      { text: "Wipe down all small appliances" },
+      { text: "Empty & clean kitchen ledges" },
       { text: "Declutter shoes, bags, and clutter" },
-      { text: "Dust surfaces, light fixtures, coat hooks" },
-      { text: "Sweep, vacuum, or mop floor" },
-      { text: "Wipe front door inside & glass panels" },
+      { text: "Dust entryway surfaces, light fixtures, coat hooks" },
     ]
   },
   {
     date: "Apr 21", label: "Tuesday", time: "1.5–2 hrs", weekend: false,
+    focus: "Finish kitchen + entryway floor",
+    tasks: [
+      { text: "Empty and clean fridge inside (shelves, drawers)" },
+      { text: "Lower cabinet exteriors" },
+      { text: "Clean trash can area" },
+      { text: "Tidy and organize one drawer or shelf" },
+      { text: "Sweep, vacuum, or mop entryway floor" },
+      { text: "Wipe front door inside & glass panels" },
+    ]
+  },
+  {
+    date: "Apr 23", label: "Thursday", time: "1.5–2 hrs", weekend: false,
     focus: "½ bath & breezeway/hall",
     tasks: [
       { text: "Full clean: toilet, sink, mirror, floor" },
@@ -493,7 +495,7 @@ const DAYS = [
     ]
   },
   {
-    date: "Apr 23", label: "Thursday", time: "1.5–2 hrs", weekend: false,
+    date: "Apr 24", label: "Friday", time: "1.5–2 hrs", weekend: false,
     focus: "Living room: dust all surfaces",
     tasks: [
       { text: "Dust furniture, shelves, décor" },
@@ -503,33 +505,27 @@ const DAYS = [
     ]
   },
   {
-    date: "Apr 24", label: "Friday", time: "1.5–2 hrs", weekend: false,
-    focus: "Living room: floors & baseboards",
+    date: "Apr 25", label: "Saturday", time: "5 hrs", weekend: true,
+    focus: "Living room: floors, baseboards + LADDER DAY",
     tasks: [
       { text: "Vacuum rugs and upholstered furniture" },
       { text: "Vacuum or mop hard floors" },
       { text: "Wipe baseboards throughout living room" },
       { text: "Fluff and arrange pillows/throws" },
-    ]
-  },
-  {
-    date: "Apr 25", label: "Saturday", time: "5 hrs", weekend: true,
-    focus: "Living room: LADDER DAY + Dining room",
-    tasks: [
       { text: "⚠️ Set up ladder safely before starting", note: "Safety first!" },
       { text: "Sweep cobwebs from vaulted ceiling" },
       { text: "Clean upper wall surfaces" },
       { text: "Clean high/vaulted windows inside" },
       { text: "Dust and wipe any high shelves or ledges" },
-      { text: "Full dining area clean: table, chairs, buffet" },
-      { text: "Dust dining light fixture" },
-      { text: "Sweep/mop dining floor & baseboards" },
     ]
   },
   {
     date: "Apr 26", label: "Sunday", time: "5 hrs", weekend: true,
-    focus: "Downstairs office & hall bathroom (deep clean)",
+    focus: "Dining room + downstairs office + hall bathroom",
     tasks: [
+      { text: "Full dining area clean: table, chairs, buffet" },
+      { text: "Dust dining light fixture" },
+      { text: "Sweep/mop dining floor & baseboards" },
       { text: "Office: declutter desk and surfaces" },
       { text: "Office: dust shelves, monitor, equipment" },
       { text: "Office: vacuum floor, wipe baseboards" },
@@ -657,8 +653,11 @@ const DAYS = [
       { text: "Master bath: toilet, sink, faucet" },
       { text: "Master bath: mirror, light fixture, floor" },
       { text: "Re-vacuum all main living areas" },
-      { text: "Quick mop of kitchen, bathrooms, entryway" },
+      { text: "Kitchen floor sweep/mop & baseboards" },
       { text: "Replace all hand towels and bath mats" },
+      { text: "If time: clean oven exterior & control panel", note: "If time allows" },
+      { text: "If time: clean backsplash", note: "If time allows" },
+      { text: "If time: wipe fridge exterior top to bottom", note: "If time allows" },
     ]
   },
   {
