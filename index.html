@@ -463,8 +463,8 @@ const DAYS = [
 
   // TONIGHT
   {
-    date: "Apr 24", label: "Friday", week: "This Week — Laundry & Small Tasks", time: "~15 mins", weekend: false,
-    focus: "Laundry: dad's soak",
+    date: "Apr 24", label: "Friday", week: "✓ Completed", time: "done", weekend: false,
+    focus: "Laundry: dad's soak ✓",
     tasks: [
       { text: "Soak dad's stained laundry overnight" },
     ]
@@ -472,8 +472,8 @@ const DAYS = [
 
   // WEEKEND 1 — Bathrooms first
   {
-    date: "Apr 25", label: "Saturday", week: "Weekend 1 — Bathrooms", time: "2–3 hrs", weekend: true,
-    focus: "Hall bathroom ✓ + small bathroom",
+    date: "Apr 25", label: "Saturday", week: "Weekend 1 — Bathrooms", time: "done", weekend: true,
+    focus: "Hall bathroom ✓",
     tasks: [
       { text: "Hall bathroom: clean toilet inside and out" },
       { text: "Hall bathroom: clean mirror & medicine cabinet" },
@@ -483,37 +483,37 @@ const DAYS = [
     ]
   },
   {
-    date: "Apr 26", label: "Sunday", time: "2–3 hrs", weekend: true,
-    focus: "Hall bathroom finish + small bathroom + master bath + fixes",
+    date: "Apr 26", label: "Sunday", time: "done", weekend: true,
+    focus: "Hall & small bathroom ✓",
     tasks: [
       { text: "Hall bathroom: scrub tub/shower walls & floor" },
       { text: "Hall bathroom: scrub sink" },
-      { text: "Hall bathroom: vacuum & mop floor" },
       { text: "Small bathroom: full clean — toilet, sink, mirror" },
       { text: "Small bathroom: wipe walls and light switch" },
-      { text: "Small bathroom: vacuum floor, replace towels" },
-      { text: "Empty countertop in master bathroom" },
-      { text: "Wipe countertop & clean sinks" },
-      { text: "Rinse out tub" },
-      { text: "Clean toilet" },
-      { text: "Vacuum master bath floor and mop" },
-      { text: "Try to fix master toilet", note: "If it doesn't work, it waits for Aclan" },
-      { text: "Fix carpet outside hall bathroom", note: "Staple pad, push carpet under baseboards" },
+      { text: "Small bathroom: replace towels" },
     ]
   },
 
-  // WEEKDAYS — tiny tasks
+  // WEEKDAYS
   {
-    date: "Apr 27", label: "Monday", week: "Week of Apr 27 — Laundry & Tiny Tasks", time: "~20–30 mins", weekend: false,
-    focus: "Laundry: dad's wash & fold + cabinets 1 & 2",
+    date: "Apr 27", label: "Monday", week: "Week of Apr 27 — Catch Up", time: "done", weekend: false,
+    focus: "Laundry: dad's wash ✓",
     tasks: [
       { text: "Wash dad's soaked laundry" },
-      { text: "Fold and set aside when dry" },
-      { text: "Wipe exterior faces of lower cabinets 1 & 2" },
+      { text: "Fold dad's laundry before bed" },
     ]
   },
   {
     date: "Apr 28", label: "Tuesday", time: "~20–30 mins", weekend: false,
+    focus: "Bathroom floors + cabinets 1 & 2",
+    tasks: [
+      { text: "Hall bathroom: vacuum & mop floor" },
+      { text: "Small bathroom: vacuum & mop floor" },
+      { text: "Wipe exterior faces of lower cabinets 1 & 2" },
+    ]
+  },
+  {
+    date: "Apr 29", label: "Wednesday", time: "~20–30 mins", weekend: false,
     focus: "Laundry: sheets + cabinets 3 & 4",
     tasks: [
       { text: "Wash your sheets" },
@@ -521,7 +521,7 @@ const DAYS = [
     ]
   },
   {
-    date: "Apr 29", label: "Wednesday", time: "~20–30 mins", weekend: false,
+    date: "Apr 30", label: "Thursday", time: "~20–30 mins", weekend: false,
     focus: "Laundry: towels + cabinets 5 & 6",
     tasks: [
       { text: "Wash bath towels and bathroom throws" },
@@ -529,42 +529,42 @@ const DAYS = [
     ]
   },
   {
-    date: "Apr 30", label: "Thursday", time: "~20–30 mins", weekend: false,
+    date: "May 1", label: "Friday", time: "~20–30 mins", weekend: false,
     focus: "Laundry: colors + cabinets 7 & 8",
     tasks: [
       { text: "Wash colored towels and your own laundry" },
       { text: "Wipe exterior faces of lower cabinets 7 & 8" },
     ]
   },
+
+  // WEEKEND 2 — Master bath + clutter & downstairs
   {
-    date: "May 1", label: "Friday", time: "~20 mins", weekend: false,
-    focus: "Kitchen: small appliances",
+    date: "May 2", label: "Saturday", week: "Weekend 2 — Master Bath + Clutter", time: "2–3 hrs", weekend: true,
+    focus: "Master bathroom + fixes + kitchen",
     tasks: [
+      { text: "Empty countertop in master bathroom" },
+      { text: "Wipe countertop & clean sinks" },
+      { text: "Rinse out tub" },
+      { text: "Clean toilet" },
+      { text: "Vacuum master bath floor and mop" },
+      { text: "Try to fix master toilet", note: "If it doesn't work, it waits for Aclan" },
+      { text: "Fix carpet outside hall bathroom", note: "Staple pad, push carpet under baseboards" },
       { text: "Clean toaster" },
       { text: "Wipe off panini maker" },
       { text: "Wipe down all small appliances" },
+      { text: "Empty & clean kitchen ledges" },
+      { text: "Clean trash can area" },
     ]
   },
-
-  // WEEKEND 2 — Clutter & downstairs
   {
-    date: "May 2", label: "Saturday", week: "Weekend 2 — Clutter & Downstairs", time: "2–3 hrs", weekend: true,
-    focus: "Clutter + dining & office",
+    date: "May 3", label: "Sunday", time: "2–3 hrs", weekend: true,
+    focus: "Clutter + dining & office + living room",
     tasks: [
       { text: "Clear clutter on dining table" },
       { text: "Dust dining table and chairs" },
       { text: "Clear clutter on desk in office" },
       { text: "Dust desk, vacuum chair, wipe lamp" },
       { text: "Vacuum office & dining area" },
-      { text: "Empty & clean kitchen ledges" },
-      { text: "Lower cabinet exteriors" },
-      { text: "Clean trash can area" },
-    ]
-  },
-  {
-    date: "May 3", label: "Sunday", time: "2–3 hrs", weekend: true,
-    focus: "Living room + entryway + stairs",
-    tasks: [
       { text: "Dust all furniture in living room" },
       { text: "Vacuum sofas in living room" },
       { text: "Vacuum floors in living room and entryway" },
