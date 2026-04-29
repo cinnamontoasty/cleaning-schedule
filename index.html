@@ -504,43 +504,43 @@ const DAYS = [
     ]
   },
   {
-    date: "Apr 28", label: "Tuesday", time: "~20–30 mins", weekend: false,
-    focus: "Bathroom floors + cabinets 1 & 2",
+    date: "Apr 28", label: "Tuesday", week: "This Week — Laundry & Cabinets", time: "~20 mins", weekend: false,
+    focus: "Light: towel soak + 2 cabinets",
     tasks: [
-      { text: "Hall bathroom: vacuum & mop floor" },
-      { text: "Small bathroom: vacuum & mop floor" },
+      { text: "Soak towels & bath rugs in hot OxiClean", note: "Soak 1–2 hrs or overnight, then wash hot. No fabric softener!" },
       { text: "Wipe exterior faces of lower cabinets 1 & 2" },
     ]
   },
   {
-    date: "Apr 29", label: "Wednesday", time: "~20–30 mins", weekend: false,
-    focus: "Laundry: sheets + cabinets 3 & 4",
+    date: "Apr 29", label: "Wednesday", time: "~15 mins", weekend: false,
+    focus: "Very light: laundry + 2 cabinets",
     tasks: [
-      { text: "Wash your sheets" },
+      { text: "Wash sheets & comforter" },
       { text: "Wipe exterior faces of lower cabinets 3 & 4" },
     ]
   },
   {
-    date: "Apr 30", label: "Thursday", time: "~20–30 mins", weekend: false,
-    focus: "Laundry: towels + cabinets 5 & 6",
+    date: "Apr 30", label: "Thursday", time: "~20 mins", weekend: false,
+    focus: "Light: laundry + 2 cabinets",
     tasks: [
-      { text: "Wash bath towels and bathroom throws" },
+      { text: "Wash your own clothes" },
       { text: "Wipe exterior faces of lower cabinets 5 & 6" },
     ]
   },
   {
-    date: "May 1", label: "Friday", time: "~20–30 mins", weekend: false,
-    focus: "Laundry: colors + cabinets 7 & 8",
+    date: "May 1", label: "Friday", time: "~20 mins", weekend: false,
+    focus: "Light: kitchen appliances + 2 cabinets",
     tasks: [
-      { text: "Wash colored towels and your own laundry" },
+      { text: "Clean toaster" },
+      { text: "Wipe off panini maker" },
       { text: "Wipe exterior faces of lower cabinets 7 & 8" },
     ]
   },
 
-  // WEEKEND 2 — Master bath + clutter & downstairs
+  // WEEKEND 2
   {
     date: "May 2", label: "Saturday", week: "Weekend 2 — Master Bath + Clutter", time: "2–3 hrs", weekend: true,
-    focus: "Master bathroom + fixes + kitchen",
+    focus: "Heavy: master bathroom + fixes",
     tasks: [
       { text: "Empty countertop in master bathroom" },
       { text: "Wipe countertop & clean sinks" },
@@ -549,116 +549,112 @@ const DAYS = [
       { text: "Vacuum master bath floor and mop" },
       { text: "Try to fix master toilet", note: "If it doesn't work, it waits for Aclan" },
       { text: "Fix carpet outside hall bathroom", note: "Staple pad, push carpet under baseboards" },
-      { text: "Clean toaster" },
-      { text: "Wipe off panini maker" },
-      { text: "Wipe down all small appliances" },
-      { text: "Empty & clean kitchen ledges" },
-      { text: "Clean trash can area" },
     ]
   },
   {
     date: "May 3", label: "Sunday", time: "2–3 hrs", weekend: true,
-    focus: "Clutter + dining & office + living room",
+    focus: "Light: clutter + kitchen",
     tasks: [
       { text: "Clear clutter on dining table" },
-      { text: "Dust dining table and chairs" },
       { text: "Clear clutter on desk in office" },
-      { text: "Dust desk, vacuum chair, wipe lamp" },
-      { text: "Vacuum office & dining area" },
-      { text: "Dust all furniture in living room" },
-      { text: "Vacuum sofas in living room" },
-      { text: "Vacuum floors in living room and entryway" },
-      { text: "Dust stair rail and ledges" },
-      { text: "Vacuum stairs" },
-      { text: "Clean cobwebs on vaulted ceiling", note: "Use ladder safely!" },
+      { text: "Empty & clean kitchen ledges" },
+      { text: "Clean trash can area" },
+      { text: "Wipe down all small appliances" },
     ]
   },
 
   // CONFERENCE WEEK — very light
   {
     date: "May 4", label: "Monday", week: "Conference Week — Very Light", time: "~20 mins", weekend: false,
-    focus: "Upstairs: quick dust",
+    focus: "Light: dust dining & office",
+    tasks: [
+      { text: "Dust dining table and chairs" },
+      { text: "Dust desk, vacuum chair, wipe lamp" },
+    ]
+  },
+  {
+    date: "May 7", label: "Thursday", time: "~20 mins", weekend: false,
+    focus: "Light: dust master bedroom",
     tasks: [
       { text: "Dust furniture in master bedroom" },
     ]
   },
   {
-    date: "May 7", label: "Thursday", time: "~20 mins", weekend: false,
-    focus: "Upstairs: vacuum bedroom floors",
-    tasks: [
-      { text: "Vacuum bedroom floors" },
-      { text: "Vacuum breezeway & hallway" },
-    ]
-  },
-  {
     date: "May 8", label: "Friday", time: "~20 mins", weekend: false,
-    focus: "Upstairs: offices & workout room",
+    focus: "Light: dust upstairs rooms",
     tasks: [
       { text: "Dust workout room and upstairs office furniture" },
     ]
   },
 
-  // WEEKEND 3 — Windows & upstairs
+  // WEEKEND 3 — Cobwebs, living room & windows
   {
-    date: "May 9", label: "Saturday", week: "Weekend 3 — Windows & Upstairs", time: "2–3 hrs", weekend: true,
-    focus: "Wash balcony + office & workout room windows",
+    date: "May 9", label: "Saturday", week: "Weekend 3 — Cobwebs, Living Room & Windows", time: "2–3 hrs", weekend: true,
+    focus: "Heavy: cobwebs + living room + balcony",
     tasks: [
+      { text: "⚠️ Set up ladder safely", note: "Safety first!" },
+      { text: "Clean cobwebs on vaulted ceiling" },
+      { text: "Dust all furniture in living room" },
+      { text: "Vacuum sofas in living room" },
+      { text: "Dust stair rail and ledges" },
       { text: "Wash balcony thoroughly", note: "Do this before downstairs windows!" },
-      { text: "Remove office & workout room windows" },
-      { text: "Clean windows in shower" },
-      { text: "Clean screens" },
-      { text: "Put windows back" },
-      { text: "Vacuum office, workout room, and hall bathroom floor" },
-      { text: "Empty & clean fridge inside (shelves, drawers)" },
     ]
   },
   {
     date: "May 10", label: "Sunday", time: "2–3 hrs", weekend: true,
-    focus: "Living room windows + mop downstairs",
+    focus: "Light: upstairs windows + fridge",
     tasks: [
-      { text: "Clean windows in living room" },
-      { text: "Clean slider in office/dining area inside & outside" },
-      { text: "Vacuum kitchen" },
-      { text: "Mop all downstairs floors" },
-      { text: "Tidy and organize one kitchen drawer or shelf" },
+      { text: "Remove office & workout room windows" },
+      { text: "Clean windows in shower" },
+      { text: "Clean screens" },
+      { text: "Put windows back" },
+      { text: "Empty & clean fridge inside (shelves, drawers)" },
     ]
   },
 
-  // FINAL WEEK — finishing touches
+  // FINAL WEEK
   {
-    date: "May 11", label: "Monday", week: "Final Week — Finishing Touches", time: "~20 mins", weekend: false,
-    focus: "Curtains & bedding",
+    date: "May 11", label: "Monday", week: "Final Week — Windows, Floors & Finishing Touches", time: "~20 mins", weekend: false,
+    focus: "Light: living room windows + curtains",
     tasks: [
       { text: "Wash curtains" },
+      { text: "Clean windows in living room" },
     ]
   },
   {
     date: "May 12", label: "Tuesday", time: "~20 mins", weekend: false,
-    focus: "Meals & shopping",
+    focus: "Light: slider + meal planning",
     tasks: [
+      { text: "Clean slider in office/dining area inside & outside" },
       { text: "Plan meals for Aclan's homecoming week" },
       { text: "Write shopping list" },
     ]
   },
   {
-    date: "May 13", label: "Wednesday", time: "~20 mins", weekend: false,
-    focus: "Personal",
+    date: "May 13", label: "Wednesday", time: "~15 mins", weekend: false,
+    focus: "Very light: personal",
     tasks: [
       { text: "Shave legs 😄" },
-      { text: "Any last personal prep" },
     ]
   },
   {
-    date: "May 14", label: "Thursday", time: "~20 mins", weekend: false,
-    focus: "Grocery shopping",
+    date: "May 14", label: "Thursday", time: "~30 mins", weekend: false,
+    focus: "Medium: upstairs vacuuming + groceries",
     tasks: [
+      { text: "Vacuum bedroom floors" },
+      { text: "Vacuum breezeway & hallway" },
+      { text: "Vacuum office, workout room, and hall bathroom floor" },
       { text: "Do the grocery shopping" },
     ]
   },
   {
-    date: "May 15", label: "Friday", time: "~20 mins", weekend: false,
-    focus: "Final kitchen tidy",
+    date: "May 15", label: "Friday", time: "~30 mins", weekend: false,
+    focus: "Medium: downstairs vacuum & mop + final tidy",
     tasks: [
+      { text: "Vacuum floors in living room, entryway, dining, office" },
+      { text: "Vacuum stairs" },
+      { text: "Vacuum kitchen" },
+      { text: "Mop all downstairs floors" },
       { text: "Wipe kitchen counters" },
       { text: "Empty trash throughout house" },
       { text: "Fresh towels in all bathrooms" },
