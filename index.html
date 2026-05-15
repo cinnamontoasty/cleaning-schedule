@@ -341,7 +341,96 @@
     text-decoration: none;
   }
 
-  .data-bar {
+  .declutter-btn {
+    margin: 12px 14px 0;
+    background: #1a2e0a;
+    border: 1px solid #3a5a1a;
+    border-radius: var(--radius);
+    padding: 12px 16px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem;
+    color: var(--accent2);
+    cursor: pointer;
+    width: calc(100% - 28px);
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .declutter-btn .btn-icon { font-size: 1.2rem; flex-shrink: 0; }
+
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 300;
+    padding: 20px;
+    overflow-y: auto;
+  }
+
+  .modal-overlay.show { display: flex; align-items: flex-start; justify-content: center; }
+
+  .modal {
+    background: var(--surface);
+    border: 1px solid #3a5a3a;
+    border-radius: var(--radius);
+    padding: 24px 20px;
+    max-width: 480px;
+    width: 100%;
+    margin-top: 40px;
+  }
+
+  .modal h2 {
+    font-family: 'Playfair Display', serif;
+    color: var(--accent2);
+    font-size: 1.2rem;
+    margin-bottom: 16px;
+  }
+
+  .modal h3 {
+    color: var(--gold);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: 16px 0 8px;
+  }
+
+  .modal p, .modal li {
+    font-size: 0.85rem;
+    color: var(--text);
+    line-height: 1.6;
+    margin-bottom: 6px;
+  }
+
+  .modal ol {
+    padding-left: 18px;
+  }
+
+  .modal .box {
+    background: var(--surface2);
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin: 8px 0;
+    font-size: 0.82rem;
+    color: var(--accent2);
+    line-height: 1.6;
+  }
+
+  .modal-close {
+    margin-top: 20px;
+    width: 100%;
+    background: var(--accent);
+    color: #0f1f0f;
+    border: none;
+    border-radius: 10px;
+    padding: 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+  }
     margin: 12px 14px 0;
     display: flex;
     gap: 8px;
@@ -415,7 +504,32 @@
   </div>
 </header>
 
-<div class="data-bar">
+<button class="declutter-btn" onclick="document.getElementById('declutterModal').classList.add('show')">
+  <span class="btn-icon">📦</span>
+  <span><strong>Decluttering method</strong> — tap for tips</span>
+</button>
+
+<div class="modal-overlay" id="declutterModal">
+  <div class="modal">
+    <h2>📦 The 4-Box Declutter Method</h2>
+    <p>Clutter piles up because things don't have a <em>home</em>. Each pile is a stack of deferred decisions. The fix: make one decision per item, right now.</p>
+    <h3>Set up 4 boxes or bags</h3>
+    <div class="box">🗑️ <strong>Trash</strong> — obvious, just toss it</div>
+    <div class="box">📦 <strong>Belongs elsewhere</strong> — put it away immediately or set by the door</div>
+    <div class="box">📋 <strong>File / action needed</strong> — bills, papers, things needing a response</div>
+    <div class="box">✅ <strong>Keep here</strong> — things that actually belong in this spot</div>
+    <h3>The rules</h3>
+    <ol>
+      <li>Work through one pile at a time</li>
+      <li>Touch each item only once — decide immediately</li>
+      <li>Don't overthink it — if you're unsure, it's probably trash</li>
+      <li>The "file/action" box is where real clutter lives — deal with it weekly</li>
+    </ol>
+    <h3>For papers</h3>
+    <p>One single inbox tray, sorted once a week. Anything older than a year that isn't legal or financial — recycle it.</p>
+    <button class="modal-close" onclick="document.getElementById('declutterModal').classList.remove('show')">Got it! ✓</button>
+  </div>
+</div>
   <button class="data-btn" onclick="exportProgress()">
     <span class="btn-icon">📤</span> Export progress
   </button>
@@ -509,19 +623,17 @@ const DAYS = [
 
   // FINAL WEEKEND
   {
-    date: "May 9", label: "Saturday", week: "Final Weekend — The Big Push", time: "take breaks!", weekend: true,
-    focus: "Ceiling, windows, living room, kitchen, master bath",
+    date: "May 9", label: "Saturday", week: "Final Weekend — The Big Push", time: "done", weekend: true,
+    focus: "Ceiling, windows, living room, kitchen ✓ (partial)",
     tasks: [
-      { text: "⚠️ Set up ladder safely", note: "Safety first!" },
+      { text: "⚠️ Set up ladder safely" },
       { text: "Clean cobwebs on vaulted ceiling" },
-      { text: "Vacuum inner surfaces of all downstairs windows", note: "Removing spiderwebs only" },
+      { text: "Vacuum inner surfaces of all downstairs windows" },
       { text: "Vacuum inner surfaces of slider in office/dining area" },
       { text: "Dust all furniture in living room" },
       { text: "Vacuum sofas in living room" },
-      { text: "Clear clutter on dining table" },
-      { text: "Dust dining table & chairs" },
       { text: "Wash balcony thoroughly" },
-      { text: "Vacuum inner surfaces of all upstairs windows", note: "Removing spiderwebs only" },
+      { text: "Vacuum inner surfaces of all upstairs windows" },
       { text: "Wipe down all small appliances" },
       { text: "Clean toaster" },
       { text: "Wipe off panini maker" },
@@ -529,25 +641,17 @@ const DAYS = [
       { text: "Wipe exterior faces of lower cabinets 5 & 6" },
       { text: "Wipe exterior faces of lower cabinets 7 & 8" },
       { text: "Master bath: clean light fixture" },
-      { text: "Master bath: clean mirror" },
-      { text: "Master bath: empty & wipe countertop" },
-      { text: "Master bath: clean sinks & faucets" },
       { text: "Master bath: clean toilet inside and out" },
       { text: "Master bath: rinse out tub" },
       { text: "Master bath: vacuum floor" },
       { text: "Master bath: mop floor" },
-      { text: "Try to fix master toilet", note: "If it doesn't work, it waits for Aclan" },
+      { text: "Try to fix master toilet" },
     ]
   },
   {
-    date: "May 10", label: "Sunday", time: "take breaks!", weekend: true,
-    focus: "All vacuuming & mopping + upstairs dusting",
+    date: "May 10", label: "Sunday", time: "done", weekend: true,
+    focus: "Vacuuming & mopping ✓ (partial)",
     tasks: [
-      { text: "Dust furniture in master bedroom" },
-      { text: "Declutter bedside table" },
-      { text: "Unpack conference bag" },
-      { text: "Dust workout room furniture" },
-      { text: "Dust upstairs office furniture" },
       { text: "Dust stair rail and ledges" },
       { text: "Vacuum living room floors" },
       { text: "Vacuum entryway" },
@@ -569,16 +673,8 @@ const DAYS = [
 
   // FINAL WEEK — very light
   {
-    date: "May 11", label: "Monday", week: "Final Week — Light Tasks Only", time: "~20 mins", weekend: false,
-    focus: "Curtains + comforter",
-    tasks: [
-      { text: "Wash curtains", note: "Hang to dry" },
-      { text: "Wash comforter", note: "Hang to dry" },
-    ]
-  },
-  {
-    date: "May 12", label: "Tuesday", time: "~20 mins", weekend: false,
-    focus: "Bath rugs + meal planning",
+    date: "May 12", label: "Tuesday", time: "done", weekend: false,
+    focus: "Bath rugs + meal planning ✓",
     tasks: [
       { text: "Wash bath rugs" },
       { text: "Plan meals for Aclan's homecoming week" },
@@ -586,20 +682,10 @@ const DAYS = [
     ]
   },
   {
-    date: "May 13", label: "Wednesday", time: "~15 mins", weekend: false,
-    focus: "Fridge + personal",
-    tasks: [
-      { text: "Empty & clean fridge inside (shelves, drawers)" },
-      { text: "Shave legs 😄" },
-    ]
-  },
-  {
-    date: "May 14", label: "Thursday", time: "~20 mins", weekend: false,
-    focus: "Grocery shopping + kitchen tidy",
+    date: "May 14", label: "Thursday", time: "done", weekend: false,
+    focus: "Grocery shopping ✓",
     tasks: [
       { text: "Do the grocery shopping" },
-      { text: "Wipe kitchen counters" },
-      { text: "Empty trash throughout house" },
     ]
   },
   {
@@ -616,14 +702,16 @@ const DAYS = [
       { text: "Master bath: clean sinks & faucets", note: "Morning break" },
       { text: "Master bath: clean toilet inside and out", note: "Morning break" },
       { text: "Hang curtains to dry when washer done", note: "Morning break" },
-      { text: "Declutter dining table", note: "Afternoon break — 4-box method!" },
+      { text: "Clear clutter on dining table", note: "Afternoon break — 4-box method!" },
+      { text: "Dust dining table & chairs", note: "Afternoon break" },
       { text: "Declutter desk", note: "Afternoon break" },
       { text: "Declutter living room table", note: "Afternoon break" },
       { text: "Declutter pile by bedside table", note: "Afternoon break" },
-      { text: "Empty conference bag 😄", note: "Afternoon break" },
-      { text: "Wipe furniture in master bedroom", note: "Afternoon break" },
-      { text: "Wipe furniture in upstairs office", note: "Afternoon break" },
-      { text: "Wipe furniture in workout room", note: "Afternoon break" },
+      { text: "Unpack conference bag 😄", note: "Afternoon break" },
+      { text: "Dust furniture in master bedroom", note: "Afternoon break" },
+      { text: "Dust furniture in upstairs office", note: "Afternoon break" },
+      { text: "Dust furniture in workout room", note: "Afternoon break" },
+      { text: "Wipe out fridge inside", note: "Afternoon break — after furniture" },
       { text: "Any remaining decluttering", note: "Evening" },
       { text: "Fresh towels in all bathrooms", note: "Evening" },
       { text: "Quick wipe of kitchen counters", note: "Evening" },
